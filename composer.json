@@ -1,0 +1,15 @@
+{
+    "name": "yournamespace/gsp-ui-kit",
+    "description": "A UI kit plugin for WordPress",
+    "type": "wordpress-plugin",
+    "autoload": {
+      "psr-4": {
+        "GSP_UI_Kit\\": "inc/"
+      }
+    },
+    "require": {},
+    "require-dev": {
+      "psr/simple-cache": "^1.0"
+    }
+  }
+  
