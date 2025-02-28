@@ -23,15 +23,11 @@ class Loader
 
 	public function register_scripts()
 	{
+		// css
+		Register_Assets::css();
 
-		// wp_register_style(
-		// 	'gsp-slider',
-		// 	gsp_ui_kit_root_url . 'assets/dest/css/bundle.css',
-		// 	[],
-		// 	$this->assets_version,
-		// 	true
-		// );
-
+		// css
+		Register_Assets::js();
 		
 	}
 
@@ -42,6 +38,6 @@ class Loader
 	function register_widgets($widgets_manager)
 	{
 
-		$widgets_manager->register(new Full_Width_Slider());
+		$widgets_manager->register(new Widgets\Tutor_LMS_Courses\Widget() );
 	}
 }

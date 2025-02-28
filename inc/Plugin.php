@@ -32,6 +32,14 @@ class Plugin {
     }
 
     public function register_assets() {
+
+        wp_enqueue_style(
+            'gsp-ui-kit-common',
+            gsp_ui_kit_root_url . 'assets/dest/css/common.min.css',
+            [],
+            microtime()
+        );
+
         wp_enqueue_style(
             'gsp-ui-kit-style',
             gsp_ui_kit_root_url . 'assets/dest/css/bundle.css',

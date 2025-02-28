@@ -12,6 +12,8 @@ class GSP_UI_KIT_SLIDER {
 
         // this is the each slide inside slider
         const slide = this.sliders[i].getElementsByClassName("slide");
+        const is_auto_play = this.sliderBoxs[i].classList.contains('auto-play') ? true : false;
+        
         // set slidebox quantity
         if (slide) {
           // in zero index contain total slide , second index contain current index.
@@ -21,7 +23,7 @@ class GSP_UI_KIT_SLIDER {
             total_slides: slide.length,
             current_slide: 1,
             slide_width: slideWidth,
-            is_forward: true,
+            is_auto_play: is_auto_play,
           });
         }
       }
@@ -58,31 +60,35 @@ class GSP_UI_KIT_SLIDER {
     next[index].addEventListener("click", () => {
       const slideData = this.slidersData[index];
 
-      // slideData.current_slide = slideData.total_slides;
-
-      if (slideData.current_slide < slideData.total_slides) {
-        // reduce the current index
-        slideData.current_slide--;
-        this.setSlideForward(
-          index,
-         (  ) * slideData.slide_width
-        );
-          
-        console.log("forwarding..." + slideData.current_slide);
-
+      if ( slideData.current_slide == 1) {
+        slideData.current_slide = slideData.total_slides - 1;
       } else {
-        // set current slide number from 1
         slideData.current_slide--;
-
-        this.sliders[index].style.transform = `translateX(-${
-          (slideData.current_slide - 1) * slideData.slide_width
-        }px)`;
-        // setTimeout(() => {
-        //   this.sliders[index].style.transition = "transform 0.5s ease";
-        // }, 600);
-        // again set current in first index
-        // slideData.current_slide = 1;
       }
+
+      const translateX =  `translateX(-${slideData.slide_width}px)`;
+
+      if ( this.sliders[index].style.transform == translateX ) {
+        this.setSlideFirst(index);
+        slideData.current_slide = 1;
+      } else {
+
+        // if slider reach on the last slider
+        if (slideData.current_slide == ( slideData.total_slides - 1 )) {
+          this.setSlideForward(
+            index,
+            ( slideData.current_slide - 1  ) * slideData.slide_width
+          );
+        }else{
+          // 
+          this.setSlideForward(
+            index,
+            slideData.current_slide * slideData.slide_width
+          );
+        }
+        
+      }
+
     });
   }
 
@@ -98,5 +104,19 @@ class GSP_UI_KIT_SLIDER {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  new GSP_UI_KIT_SLIDER();
+  
+  const slider = new Siema({
+    selector: ".gsp-ui-kit-slider-1",
+    easing: "ease",
+    draggable: true,
+    multipleDrag: true,
+    threshold: 20,
+    loop: false,
+    rtl: false,
+    onInit: () => {},
+    onChange: () => {},
+  });
+
+  $('.gsp-ui-kit-slider-1').slick();
+
 });

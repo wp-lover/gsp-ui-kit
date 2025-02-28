@@ -1,24 +1,18 @@
-.gsp-ui-kit-slider-box {
-  width: 100%;
-  position: relative;
-  border: red;
+.gsp-ui-kit-slider {
   overflow: hidden;
-
-  .sliders {
-    width: 100%;
-    transition: transform 0.5s ease;
-    display: flex;
-    .slide {
+  .slide {
+    background-color: red;
+    margin: 10px;
+    img{
       width: 100%;
-      padding: 20px;
-      background-color: rgb(236, 169, 80);
-      flex-shrink: 0;
-      border: 3px solid green;
+      z-index: 99;
     }
-  } // sliders
 
-  .slider-nav{
-   
-    left: 0px;
+    .text-content{
+      position: absolute;
+      left: 50px;
+      top: 100px;
+      z-index: 100;
+    }
   }
 }
