@@ -48,8 +48,8 @@ class Plugin {
         );
 
         wp_enqueue_script(
-			'gsp-ui-kit-slider',
-			gsp_ui_kit_root_url . 'assets/dest/js/typescript-bundle.js',
+			'gsp-ui-kit-common',
+			gsp_ui_kit_root_url . 'assets/dest/js/bundle.js',
 			[],
 			microtime(),
 			true

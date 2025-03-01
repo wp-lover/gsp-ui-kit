@@ -1,3 +1,5 @@
+import Set_Thumbnail_Height from './modules/set-thumbnail-height';
+
 class GSP_UI_KIT_SLIDER {
   constructor() {
     this.sliderBoxs = document.getElementsByClassName("gsp-ui-kit-slider-box");
@@ -104,6 +106,8 @@ class GSP_UI_KIT_SLIDER {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+
+  new Set_Thumbnail_Height();
   
   const slider = new Siema({
     selector: ".gsp-ui-kit-slider-1",
