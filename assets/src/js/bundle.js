@@ -1,4 +1,5 @@
 import Set_Thumbnail_Height from './modules/set-thumbnail-height';
+import GSP_UI_Kit_Youtube_Player from './modules/youtube-player';
 
 class GSP_UI_KIT_SLIDER {
   constructor() {
@@ -108,19 +109,24 @@ class GSP_UI_KIT_SLIDER {
 document.addEventListener("DOMContentLoaded", () => {
 
   new Set_Thumbnail_Height();
-  
-  const slider = new Siema({
-    selector: ".gsp-ui-kit-slider-1",
-    easing: "ease",
-    draggable: true,
-    multipleDrag: true,
-    threshold: 20,
-    loop: false,
-    rtl: false,
-    onInit: () => {},
-    onChange: () => {},
-  });
 
-  $('.gsp-ui-kit-slider-1').slick();
+  
+  new GSP_UI_Kit_Youtube_Player();
+  
+  // const slider = new Siema({
+  //   selector: ".gsp-ui-kit-slider-1",
+  //   easing: "ease",
+  //   draggable: true,
+  //   multipleDrag: true,
+  //   threshold: 20,
+  //   loop: false,
+  //   rtl: false,
+  //   onInit: () => {},
+  //   onChange: () => {},
+  // });
+
+  // $('.gsp-ui-kit-slider-1').slick();
 
 });
+
+

@@ -10,7 +10,7 @@ class Register_Assets {
         // 
         wp_register_style(
             'gsp-ui-kit-post-card',
-            gsp_ui_kit_root_url . '/inc/Elementor/assets/tutor-lms-courses/style.css',
+            GSP_UI_KIT_ROOT_URL . '/inc/Elementor/assets/tutor-lms-courses/style.css',
             [],
             microtime(),
             'all'

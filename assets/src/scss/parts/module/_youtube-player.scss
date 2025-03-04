@@ -1,0 +1,77 @@
+.video-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    aspect-ratio: 16/9;
+    background: black;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.play-btn {
+    background: white;
+    color: black;
+    font-size: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#player {
+    width: 100%;
+    height: 100%;
+}
+
+.click-blocker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 2;
+    pointer-events: all; /* Keeps blocking clicks */
+}
+
+.custom-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    background: #222;
+}
+
+.custom-controls button {
+    padding: 8px 12px;
+    background: #fff;
+    color: #222;
+    border: none;
+    cursor: pointer;
+}
+
+/* Fix for Fullscreen */
+.fullscreen .click-blocker {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999; /* Ensures it blocks YouTube UI */
+}

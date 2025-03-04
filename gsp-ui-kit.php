@@ -11,8 +11,8 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
-define( 'gsp_ui_kit_root_url' , plugin_dir_url(__FILE__) );
-define( 'gsp_ui_kit_root_path' , plugin_dir_path(__DIR__) );
+define( 'GSP_UI_KIT_ROOT_URL' , plugin_dir_url(__FILE__) );
+define( 'GSP_UI_KIT_ROOT_PATH' , plugin_dir_path(__FILE__) );
 
 // Include the Composer autoloader
 require_once __DIR__ . '/vendor/autoload.php';
