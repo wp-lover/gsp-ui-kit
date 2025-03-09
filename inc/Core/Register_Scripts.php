@@ -1,17 +1,19 @@
-<?php 
+<?php
 
 
 namespace GSP_UI_Kit\Core;
 
 
 
-class Register_Scripts {
+class Register_Scripts
+{
 
     private static $instance;
 
-    public $js_object = [ 'youtube_video_id' => '' ];
+    public $js_object = ['youtube_video_id' => ''];
 
-    private function __construct() {
+    private function __construct()
+    {
         add_action('wp_enqueue_scripts', [$this, 'register_assets']);
 
         add_action('wp_enqueue_scripts', function () {
@@ -22,14 +24,13 @@ class Register_Scripts {
                 [],
                 microtime()
             );
-
         }, 1000);
     }
 
     public function register_assets()
     {
 
-       
+
 
         wp_enqueue_style(
             'gsp-ui-kit-style',
@@ -49,8 +50,9 @@ class Register_Scripts {
         $this->youtube_player_scripts();
     }
 
-    private function youtube_player_scripts() {
-        
+    private function youtube_player_scripts()
+    {
+
         // wp_enqueue_script(
         //     'gsp-ui-kit-youtube-player',
         //     GSP_UI_KIT_ROOT_URL . 'assets/dest/js/bundle.js',
@@ -59,14 +61,20 @@ class Register_Scripts {
         //     true
         // );
 
-        wp_localize_script( 'gsp-ui-kit-common', 'gsp_ui_kit_youtube', [
+        wp_localize_script('gsp-ui-kit-common', 'gsp_ui_kit_youtube', [
             'video_id' => $this->js_object['youtube_video_id']
-        ] );
+        ]);
+
+        wp_localize_script('gsp-ui-kit-common', 'gsp_ui_kit_common', [
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('gsp_ui_kit_nonce'),
+        ]);
     }
 
 
-    public static function get_instance() : Register_Scripts {
-        
+    public static function get_instance(): Register_Scripts
+    {
+
         if (self::$instance == null) {
             self::$instance = new Register_Scripts();
         }

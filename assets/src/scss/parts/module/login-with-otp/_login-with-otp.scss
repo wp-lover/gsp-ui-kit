@@ -1,0 +1,40 @@
+@use '../../variable' as *;
+
+#gsp-login-with-otp-section{
+
+    .form-title{
+        text-align: center;
+    }
+
+    .form-tab {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        p{ padding: 8px 15px; cursor: pointer; font-size: 1.1em;font-weight: 600;}
+        p.active{color: $primary_color;}
+    }
+
+    .-from-input{
+        text-align: center;
+    }
+
+    button {
+        background-color: $primary_opposite_color;
+        font-size: 1.1em;font-weight: 600;
+        cursor: pointer;
+    }
+
+    a{text-decoration: none; color: $primary_color;}
+
+    .-acitve-tab{
+        color: $primary_color;
+    }
+    .-login-btn , .-signup-btn{
+        color: black !important;
+    }
+
+    #-login-message{
+        text-align: center;
+    }
+}

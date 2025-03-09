@@ -13,6 +13,10 @@ class Plugin
 
         Core\Register_Scripts::get_instance();
 
+        new \GSP_UI_Kit\WooCommerce\Replace_Frontend();
+
+        new \GSP_UI_Kit\Ajax\Request_Handler();
+
         $this->elementor_addons();
 
         $this->run_contained_action_hooks();
