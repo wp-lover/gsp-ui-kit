@@ -20,6 +20,12 @@ class Register_Assets {
 
     public static function js() {
 
-        
+        wp_register_script(
+            'gsp-ui-kit-firebase-otp-login',
+            GSP_UI_KIT_ROOT_URL . '/inc/Elementor/assets/firebase-otp-login/script.js',
+            [],
+            microtime(),
+            false
+        );
     }
 }

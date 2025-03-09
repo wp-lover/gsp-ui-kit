@@ -3,15 +3,18 @@ export default class GSP_UI_Kit_Youtube_Player {
     this.player;
 
     let videoContainer = document.querySelector(".video-container");
-    if (!videoContainer) {
-        console.error("No video container found.");
-        return;
+    if (videoContainer) {
+      this.videoId = videoContainer.getAttribute("data-video-id");
+
+      this.loadYouTubeAPI();
+  
+      this.events();
+    }else{
+      console.log("No video container found.");
+      return;
     }
-    this.videoId = videoContainer.getAttribute("data-video-id");
-
-    this.loadYouTubeAPI();
-
-    this.events();
+    
+    
   }
 
   events() {

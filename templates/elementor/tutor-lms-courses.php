@@ -19,15 +19,15 @@ if ($courses_query->have_posts()) :
                     <a href="<?php echo esc_url(get_the_permalink()); ?>" class="gsp-ui-kit-tutor-lms-title-text_c"><?php the_title(); ?></a>
                 </h2>
                 <hr />
-                <div class="-d-flex -flex-between -px-2 -mt-2">
-                    <p class="gsp-ui-course-price" style="margin-right:10px;"><?php echo $price_html; ?></p>
+                <div class="-d-flex -flex-between -px-2 mt-2">
+                    <p class="gsp-ui-course-price"><?php echo $price_html; ?></p>
                     <?php
                     // 🔹 Display Category Name & Permalink
                     if (!empty($terms) && !is_wp_error($terms)) {
-                        echo '<div class="gsp-ui-tutor-lms-categories" style="margin-left:auto;">';
+                        echo '<div class="gsp-ui-tutor-lms-category">';
                         foreach ($terms as $term) {
                             $term_link = get_term_link($term);
-                            echo '<a href="' . esc_url($term_link) . '" class="gsp-ui-tutor-lms-category">' . esc_html($term->name) . '</a> ';
+                            echo '<a href="' . esc_url($term_link) . '" class="gsp-ui-kit-tutor-lms-title-text_c">' . esc_html($term->name) . '</a> ';
                         }
                         echo '</div>';
                     }
@@ -35,8 +35,8 @@ if ($courses_query->have_posts()) :
                     ?>
                 </div>
                 <button class="gsp-ui-kit-tutor-lms-details-button-bg_c -m-2">
-                    <a href="<?php echo esc_url(get_the_permalink()); ?>" class="-btn">
-                        বিস্তারিত দেখুন
+                    <a href="<?php echo esc_url(get_the_permalink()); ?>" class="gsp-ui-kit-tutor-lms-button-text_c">
+                        <?php echo esc_html($settings['gsp_ui_kit_tutor_lms_courses_details_button_text'] ?? ''); ?>
                     </a>
                 </button>
                 <?php
@@ -46,8 +46,8 @@ if ($courses_query->have_posts()) :
                 
                 ?>
                     <button class="gsp-ui-kit-tutor-lms-enroll-button-bg_c -m-2">
-                        <a href="<?php echo $add_to_cart_url; ?>" class="-btn">
-                        ইনরোল করুন
+                        <a href="<?php echo $add_to_cart_url; ?>" class="gsp-ui-kit-tutor-lms-enroll-text_c">
+                            <?php echo esc_html($settings['gsp_ui_kit_tutor_lms_courses_enroll_button_text'] ?? ''); ?>
                         </a>
                     </button>
                 <?php

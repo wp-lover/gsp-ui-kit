@@ -54,7 +54,7 @@ class Add_Demo_PDF_Post_Meta_Field
          // Check if the PDF URL exists
          if ($pdf_url) {
              // Output the "View PDF" link
-             echo '<p class="gsp-ui-kit-demo-pdf"><a href="' . esc_url($pdf_url) . '" target="_blank" class="button alt">View Demo PDF</a></p>';
+             echo '<p class="gsp-ui-kit-demo-pdf"><a href="' . esc_url($pdf_url) . '" target="_blank" class="button alt -btn">View Demo PDF</a></p>';
          }
      }
  
@@ -71,7 +71,7 @@ class Add_Demo_PDF_Post_Meta_Field
          // Check if the PDF URL exists
          if ($pdf_url) {
              // Output the "View PDF" link
-             echo '<p class="gsp-ui-kit-demo-pdf"><a href="' . esc_url($pdf_url) . '" target="_blank" class="button alt btn">View Demo PDF</a></p>';
+             echo '<p class="gsp-ui-kit-demo-pdf"><a href="' . esc_url($pdf_url) . '" target="_blank" class="button alt -btn">View Demo PDF</a></p>';
          }
      }
 }

@@ -3,7 +3,6 @@
 namespace GSP_UI_Kit\Elementor\Widgets\Tutor_LMS_Courses;
 
 use \Elementor\Widget_Base;
-use \Elementor\Controls_Manager;
 
 defined('ABSPATH') || exit;
 
@@ -26,7 +25,7 @@ class Widget extends Widget_Base
 
     public function get_style_depends(): array
     {
-        return [];
+        return ['gsp-ui-kit-post-card'];
     }
 
     public function get_categories(): array
@@ -63,7 +62,6 @@ class Widget extends Widget_Base
         $courses_query = new \WP_Query($args);
 
         // Include the template using the constant
-    include_once GSP_UI_KIT_ROOT_PATH . 'templates/tutor-lms-courses.php';
-       
+        include_once GSP_UI_KIT_ROOT_PATH . 'templates/elementor/tutor-lms-courses.php';
     }
 }

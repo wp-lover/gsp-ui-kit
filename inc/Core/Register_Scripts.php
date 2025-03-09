@@ -13,17 +13,23 @@ class Register_Scripts {
 
     private function __construct() {
         add_action('wp_enqueue_scripts', [$this, 'register_assets']);
+
+        add_action('wp_enqueue_scripts', function () {
+
+            wp_enqueue_style(
+                'gsp-ui-kit-common',
+                GSP_UI_KIT_ROOT_URL . 'assets/dest/css/common.min.css',
+                [],
+                microtime()
+            );
+
+        }, 1000);
     }
 
     public function register_assets()
     {
 
-        wp_enqueue_style(
-            'gsp-ui-kit-common',
-            GSP_UI_KIT_ROOT_URL . 'assets/dest/css/common.min.css',
-            [],
-            microtime()
-        );
+       
 
         wp_enqueue_style(
             'gsp-ui-kit-style',

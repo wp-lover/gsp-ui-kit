@@ -39,12 +39,15 @@ class Plugin
         // Hook into the single product page to display the PDF link before Add to Cart button
         add_action('woocommerce_after_add_to_cart_button', function () {
             ( new \GSP_UI_Kit\WooCommerce\Add_Demo_PDF_Post_Meta_Field() )->display_pdf_link_above_add_to_cart_on_single_product(); 
-        } );
+        } , 15 );
         
         add_action( 'woocommerce_after_shop_loop_item_title', function () {
            ( new \GSP_UI_Kit\WooCommerce\Add_Demo_PDF_Post_Meta_Field() )->display_pdf_link_above_add_to_cart_on_shop_page();
-        });
+        } , 15);
+
+                
     }
+
 
     private function run_contained_filter_hooks()
     {

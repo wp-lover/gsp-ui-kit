@@ -77,5 +77,7 @@ class Loader
 	{
 
 		$widgets_manager->register(new Widgets\Tutor_LMS_Courses\Widget());
+
+		$widgets_manager->register(new Widgets\Firebase_OTP_Login\Widget());
 	}
 }
