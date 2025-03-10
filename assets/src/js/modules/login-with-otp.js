@@ -21,10 +21,13 @@ export default class Login_With_OTP {
       
 
       this.signup_phone_number = document.querySelector(".signup-phone-number");
+      this.signup_phone_number_label = document.getElementById('-signup-phone-number-label');
       this.signup_otp_code = document.querySelector(".signup-otp-code");
+      this.signup_message = document.querySelector('.signup-message');
 
       this.login_btn = document.querySelector(".-login-btn");
       this.signup_btn = document.querySelector(".-signup-btn");
+      this.verify_otp_btn = document.querySelector('.-verify-otp-btn');
 
       const password = localStorage.getItem('rememberPassword');
       if (password) {
@@ -54,7 +57,17 @@ export default class Login_With_OTP {
     );
 
     this.login_btn.addEventListener("click", () => this.send_login_request());
-  }
+
+    this.signup_btn.addEventListener( 'click' , () => {
+      this.send_signup_request();
+    } );
+
+    this.verify_otp_btn.addEventListener( 'click' , () => this.send_signup_otp_verification_request() );
+
+    this.signup_phone_number.addEventListener( 'keydown' , () => {
+      this.signup_message.innerHTML = '';
+    } );
+  } // envents ending
 
   form_visiability(is_login_visiable) {
     if (is_login_visiable) {
@@ -65,6 +78,8 @@ export default class Login_With_OTP {
       // login form
       this.login_form_tab.classList.add("-acitve-tab");
       this.login_form.classList.remove("-d-none");
+
+      this.form_title.innerHTML = 'Welcome to login';
     } else {
       // show the signup form
       this.login_form_tab.classList.remove("-acitve-tab");
@@ -72,6 +87,8 @@ export default class Login_With_OTP {
 
       this.signup_form.classList.remove("-d-none");
       this.signup_form_tab.classList.add("-acitve-tab");
+
+      this.form_title.innerHTML = 'Welcome to create account';
     }
   }
 
@@ -126,5 +143,80 @@ export default class Login_With_OTP {
         this.login_message.style.color = 'red';
         this.login_btn.innerHTML = 'Login';
       });
+  }
+
+  send_signup_request() {
+
+    const phone_number = this.signup_phone_number.value.replace(/[^0-9]/g, '');
+    this.signup_phone_number.value = phone_number;
+
+    if (phone_number.length != 11) {
+      this.signup_message.innerHTML = 'Invalid phone number';
+      this.signup_message.style.color = 'red';
+      return;
+    }
+
+    this.signup_btn.innerHTML = '<div class="loading-spinner"></div>';
+
+    fetch( gsp_ui_kit_common.ajax_url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded", // Important for WordPress AJAX
+      },
+      body: new URLSearchParams({
+        action: "gsp_ui_kit_signup_with_otp",
+        username: phone_number,
+        nonce: gsp_ui_kit_common.nonce,
+      }),
+    } ).then ( (response ) => response.json() ).then( ( data ) => {
+
+      if (data.success) {
+        // successed response
+        this.signup_phone_number.setAttribute( 'hidden' , 1);
+        this.signup_btn.classList.add('-d-none');
+
+        this.signup_otp_code.classList.remove('-d-none');
+        this.verify_otp_btn.classList.remove('-d-none');
+        this.signup_phone_number_label.innerHTML = 'OTP CODE';
+      }else{
+        // false response 
+        this.signup_message.innerHTML = 'Something went wrong, Try again later.';
+        this.signup_message.style.color = 'red';
+      }
+
+      console.log( data );
+
+      // this.signup_btn.innerHTML = '<div class="loading-spinner">Create Account</div>';
+      this.signup_btn.innerHTML = 'Create Account';
+    } ).catch ( ( error ) => {
+      console.error("AJAX error:", error);
+      this.signup_btn.innerHTML = 'Create Account';
+      this.signup_message.innerHTML = '"' +phone_number + '"' + ' This number might be already registed, Try with a new number,';
+    });
+
+  }
+
+  send_signup_otp_verification_request() {
+
+    this.verify_otp_btn.innerHTML = '<div class="loading-spinner"></div>';
+
+    fetch( gsp_ui_kit_common.ajax_url , {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded", // Important for WordPress AJAX
+      },
+      body: new URLSearchParams({
+        action: "gsp_ui_kit_signup_otp_verification",
+        otp_code: this.signup_otp_code.value,
+        phone_number: this.signup_phone_number.value,
+        nonce: gsp_ui_kit_common.nonce,
+      }),
+    } ).then( (response) => response.json() ).then( (data) => {
+      this.verify_otp_btn.innerHTML = 'OTP Verify';
+      console.log(data);
+    }).catch( ( error ) => {
+      console.error('otp verification error' + error);
+      this.verify_otp_btn.innerHTML = 'OTP Verify';
+    });
   }
 }

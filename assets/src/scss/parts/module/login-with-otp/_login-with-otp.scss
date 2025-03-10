@@ -2,6 +2,7 @@
 
 #gsp-login-with-otp-section{
 
+
     .form-title{
         text-align: center;
     }
@@ -30,11 +31,18 @@
     .-acitve-tab{
         color: $primary_color;
     }
-    .-login-btn , .-signup-btn{
+    button{
         color: black !important;
     }
 
     #-login-message{
         text-align: center;
     }
+}
+
+@media (max-width: 450px) {
+    #gsp-login-with-otp-section{
+        .signup-form-tab{display: none;}
+    }
+    
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Name: GSP UI Kit
  * Description: A WordPress UI Kit Plugin with OOP structure.
@@ -11,8 +12,8 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
-define( 'GSP_UI_KIT_ROOT_URL' , plugin_dir_url(__FILE__) );
-define( 'GSP_UI_KIT_ROOT_PATH' , plugin_dir_path(__FILE__) );
+define('GSP_UI_KIT_ROOT_URL', plugin_dir_url(__FILE__));
+define('GSP_UI_KIT_ROOT_PATH', plugin_dir_path(__FILE__));
 
 // Include the Composer autoloader
 require_once __DIR__ . '/vendor/autoload.php';
@@ -21,5 +22,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 if (class_exists('GSP_UI_Kit\\Plugin')) {
 
     new \GSP_UI_Kit\Plugin();
-    
+
+    // Hook the function to plugin activation
+    register_activation_hook(__FILE__, [ \GSP_UI_Kit\Core\Table_Creation::get_instance() , 'run' ]);
 }

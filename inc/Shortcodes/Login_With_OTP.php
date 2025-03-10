@@ -21,7 +21,7 @@ class Login_With_OTP
 
         ob_start();
         
-        require_once GSP_UI_KIT_ROOT_PATH . '/templates/shortcode/login-with-otp.php';
+        require_once GSP_UI_KIT_ROOT_PATH . '/templates/shortcode/login-with-otp/main-template.php';
 
         $content = ob_get_clean();
 
