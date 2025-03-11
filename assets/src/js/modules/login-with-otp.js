@@ -19,11 +19,17 @@ export default class Login_With_OTP {
       this.redirect_after_login = document.getElementById('-redirect-after-login');
       this.redirect_after_signup = document.getElementById('-redirect-after-signup');
       
-
+      this.signup_name = document.querySelector('.signup-name');
       this.signup_phone_number = document.querySelector(".signup-phone-number");
-      this.signup_phone_number_label = document.getElementById('-signup-phone-number-label');
       this.signup_otp_code = document.querySelector(".signup-otp-code");
       this.signup_message = document.querySelector('.signup-message');
+
+      // otp box , it will be used to hide/show
+      this.form_input__name = document.querySelector('.-from-input__name');
+      // otp box , it will be used to hide/show
+      this.form_input__phone = document.querySelector('.-from-input__phone');
+      // otp box , it will be used to hide/show
+      this.form_input__otp = document.querySelector('.-form-input__otp');
 
       this.login_btn = document.querySelector(".-login-btn");
       this.signup_btn = document.querySelector(".-signup-btn");
@@ -156,6 +162,13 @@ export default class Login_With_OTP {
       return;
     }
 
+    if (this.signup_name.value == '') {
+      this.signup_message.innerHTML = 'Name can not be empty!';
+      this.signup_message.style.color = 'red';
+      return;
+    }
+
+
     this.signup_btn.innerHTML = '<div class="loading-spinner"></div>';
 
     fetch( gsp_ui_kit_common.ajax_url, {
@@ -165,28 +178,39 @@ export default class Login_With_OTP {
       },
       body: new URLSearchParams({
         action: "gsp_ui_kit_signup_with_otp",
-        username: phone_number,
+        phone_number: phone_number,
+        name: this.signup_name.value,
         nonce: gsp_ui_kit_common.nonce,
       }),
     } ).then ( (response ) => response.json() ).then( ( data ) => {
 
       if (data.success) {
         // successed response
-        this.signup_phone_number.setAttribute( 'hidden' , 1);
-        this.signup_btn.classList.add('-d-none');
 
-        this.signup_otp_code.classList.remove('-d-none');
+        // hide name box
+        this.form_input__name.classList.add('-d-none');
+        // hide phone box
+        this.form_input__phone.classList.add('-d-none');
+
+        // show otp box
+        this.form_input__otp.classList.remove('-d-none');
+
+        // hide signup button
+        this.signup_btn.classList.add('-d-none');
+        // show otp verify button
         this.verify_otp_btn.classList.remove('-d-none');
-        this.signup_phone_number_label.innerHTML = 'OTP CODE';
+
+        this.signup_message.innerHTML = data.data.message ?? '';
+        this.signup_message.style.color = 'black';
       }else{
         // false response 
-        this.signup_message.innerHTML = 'Something went wrong, Try again later.';
+        
+        this.signup_message.innerHTML = data.data.error ?? '';
         this.signup_message.style.color = 'red';
       }
 
       console.log( data );
 
-      // this.signup_btn.innerHTML = '<div class="loading-spinner">Create Account</div>';
       this.signup_btn.innerHTML = 'Create Account';
     } ).catch ( ( error ) => {
       console.error("AJAX error:", error);
@@ -213,6 +237,8 @@ export default class Login_With_OTP {
       }),
     } ).then( (response) => response.json() ).then( (data) => {
       this.verify_otp_btn.innerHTML = 'OTP Verify';
+      this.signup_message.innerHTML = data.data.message ?? '';
+      this.signup_message.style.color = 'black';
       console.log(data);
     }).catch( ( error ) => {
       console.error('otp verification error' + error);

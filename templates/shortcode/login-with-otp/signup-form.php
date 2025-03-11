@@ -1,17 +1,21 @@
 <section class="signup-form -d-none">
-    <div class="-from-input">
-        <div class="text-left">
-            <label for="signup-phone-number" id="-signup-phone-number-label">Phone Number</label>
-        </div>
+    <div class="-from-input__name">
+        <label>Your name</label>
         <input type="text"
-            id="signup-phone-number"
+            class="signup-name -input -w-100"
+            placeholder="Sakib Islam" />
+    </div>
+    <div class="-from-input__phone">
+        <label>Phone Number</label>
+        <input type="text"
             class="signup-phone-number -input -w-100 -phone-number"
             placeholder="01712345678" />
     </div>
-    <div class="-form-input">
+    <div class="-form-input__otp -d-none">
+        <label>OTP Code</label>
         <input
             type="number"
-            class="signup-otp-code -input -w-100 -d-none"
+            class="signup-otp-code -input -w-100"
             placeholder="Type OTP" />
     </div>
     <input type="text" id="-redirect-after-signup" hidden value="<?php echo esc_url($redirect_after_signup); ?>">

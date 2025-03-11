@@ -28,7 +28,7 @@ class Table_Creation
         $sql = "CREATE TABLE $table_name (
             id MEDIUMINT(9) NOT NULL AUTO_INCREMENT,
             phone_number VARCHAR(25) NOT NULL UNIQUE,
-            full_name VARCHAR(50) NOT NULL DEFAULT '',
+            full_name VARCHAR(50) NOT NULL,
             date_of_birth DATETIME NULL,
             one_time_otp  VARCHAR(10) NULL,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
