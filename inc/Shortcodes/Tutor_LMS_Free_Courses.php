@@ -2,6 +2,8 @@
 
 namespace GSP_UI_Kit\Shortcodes;
 
+defined( 'ABSPATH' ) || exit;
+
 if (!defined('ABSPATH')) exit;
 
 class Tutor_LMS_Free_Courses

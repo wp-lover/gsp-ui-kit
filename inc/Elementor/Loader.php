@@ -4,6 +4,8 @@ namespace GSP_UI_Kit\Elementor;
 
 use GSP_UI_Kit\Elementor\Widgets\Full_Width_Slider;
 
+if (!defined('ABSPATH')) exit;
+
 class Loader
 {
 

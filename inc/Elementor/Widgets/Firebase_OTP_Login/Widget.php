@@ -4,6 +4,8 @@ namespace GSP_UI_Kit\Elementor\Widgets\Firebase_OTP_Login;
 
 use \Elementor\Widget_Base;
 
+if (!defined('ABSPATH')) exit;
+
 class Widget extends Widget_Base {
 
     public function get_name() : string {

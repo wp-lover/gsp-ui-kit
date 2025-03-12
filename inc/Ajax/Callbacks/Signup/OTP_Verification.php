@@ -2,6 +2,8 @@
 
 namespace GSP_UI_Kit\Ajax\Callbacks\Signup;
 
+if (!defined('ABSPATH')) exit;
+
 class OTP_Verification
 {
 

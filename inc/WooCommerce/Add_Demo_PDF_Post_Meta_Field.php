@@ -2,6 +2,8 @@
 
 namespace GSP_UI_Kit\WooCommerce;
 
+defined( 'ABSPATH' ) || exit;
+
 class Add_Demo_PDF_Post_Meta_Field
 {
 

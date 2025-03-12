@@ -1,3 +1,4 @@
+@import './parts/common';
 @import './parts/module/slider';
 @import './parts/module/youtube-player';
 @import './parts/module/blog/card-view-blog';
@@ -5,6 +6,3 @@
 @import './parts/module/loading';
 
 
-.text-left{text-align: left;}
-.text-right{text-align: right;}
-.text-center{text-align: center;}

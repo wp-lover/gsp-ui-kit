@@ -2,6 +2,7 @@
 
 namespace GSP_UI_Kit\Ajax\Callbacks\Login;
 
+if (!defined('ABSPATH')) exit;
 
 class Request {
 

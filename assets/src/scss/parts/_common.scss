@@ -1,0 +1,18 @@
+@use './variable' as *;
+
+
+.text-left{text-align: left;}
+.text-right{text-align: right;}
+.text-center{text-align: center;}
+
+.-link-text{
+    color: $primary_color;
+    cursor: pointer;
+}
+
+.-form-input{
+   select {
+    margin-top: 4px;
+    margin-bottom: 10px;
+   }
+}

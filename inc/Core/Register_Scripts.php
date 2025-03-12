@@ -3,7 +3,7 @@
 
 namespace GSP_UI_Kit\Core;
 
-
+if (!defined('ABSPATH')) exit;
 
 class Register_Scripts
 {
@@ -67,6 +67,7 @@ class Register_Scripts
 
         wp_localize_script('gsp-ui-kit-common', 'gsp_ui_kit_common', [
             'ajax_url' => admin_url('admin-ajax.php'),
+            'site_url' => esc_url( get_bloginfo('url') ),
             'nonce' => wp_create_nonce('gsp_ui_kit_nonce'),
         ]);
     }

@@ -2,6 +2,8 @@
 
 namespace GSP_UI_Kit\Shortcodes;
 
+defined( 'ABSPATH' ) || exit;
+
 class Login_With_OTP
 {
 
@@ -15,6 +17,10 @@ class Login_With_OTP
 
     public function render_ui($attr)
     {
+        if (is_user_logged_in()) {
+            wp_safe_redirect( get_home_url() );
+        }
+
         $attr = shortcode_atts([
             'redirect_url' => get_bloginfo( 'url' ) // Default video ID
         ], $attr, 'custom_youtube_player');

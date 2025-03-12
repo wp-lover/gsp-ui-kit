@@ -33,10 +33,10 @@
         </button>
     </div>
     <div class="-from-input -mt-2">
-        <a href="#" class="-forget-password">Forget Password?</a>
+        <span class="-forget-password-btn -link-text">Forget Password?</span>
     </div>
     <div class="-from-input -mt-2">
         <span>If you don't have an account, then </span>
-        <a href="#" class="signup-form-tab-2">Create an account</a>
+        <span class="signup-form-tab-2 -link-text">Create an account</span>
     </div>
 </section>

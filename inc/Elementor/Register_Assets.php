@@ -2,6 +2,7 @@
 
 namespace GSP_UI_Kit\Elementor;
 
+if (!defined('ABSPATH')) exit;
 
 class Register_Assets {
 

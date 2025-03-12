@@ -2,6 +2,8 @@
 
 namespace GSP_UI_Kit\Helpers;
 
+defined( 'ABSPATH' ) || exit;
+
 use GSP_UI_Kit\Post_Types\Register_UI_Post;
 use GSP_UI_Kit\Shortcodes\Retrive_UI_Post;
 use GSP_UI_Kit\Shortcodes\Youtube_Player;

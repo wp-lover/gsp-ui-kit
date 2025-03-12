@@ -2,6 +2,8 @@
 
 namespace GSP_UI_Kit\WooCommerce;
 
+defined( 'ABSPATH' ) || exit;
+
 class Replace_Frontend
 {
 

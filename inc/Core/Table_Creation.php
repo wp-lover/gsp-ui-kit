@@ -2,7 +2,7 @@
 
 namespace GSP_UI_Kit\Core;
 
-
+if (!defined('ABSPATH')) exit;
 
 class Table_Creation
 {
@@ -29,7 +29,11 @@ class Table_Creation
             id MEDIUMINT(9) NOT NULL AUTO_INCREMENT,
             phone_number VARCHAR(25) NOT NULL UNIQUE,
             full_name VARCHAR(50) NOT NULL,
-            date_of_birth DATETIME NULL,
+            class VARCHAR(50) NULL,
+            gender VARCHAR(10) NULL,
+            religion VARCHAR(20) NULL,
+            home_district VARCHAR(30) NULL,
+            date_of_birth DATE NULL,
             one_time_otp  VARCHAR(10) NULL,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY (id)

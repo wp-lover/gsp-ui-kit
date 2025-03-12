@@ -33,6 +33,8 @@ class Plugin
         $init_hooked = new Helpers\Init_Hook();
         add_action('init', [$init_hooked, 'run']);
 
+        $template_redirect_hooked = new Helpers\Template_Redirect_Hook();
+        add_action('template_redirect', [ $template_redirect_hooked, 'run' ]);
         
 
          // add a demo pdf meta field on product

@@ -5,6 +5,8 @@ namespace GSP_UI_Kit\Elementor\Widgets\Firebase_OTP_Login;
 
 use \Elementor\Controls_Manager;
 
+if (!defined('ABSPATH')) exit;
+
 class Register_Controls
 {
 
