@@ -87,59 +87,6 @@ class Register_Controls
             ]
         );
 
-        // 🔹 Enroll Text Color
-        $instance->add_control(
-            'gsp_ui_kit_tutor_lms_courses_enroll_text_color',
-            [
-                'label'     => esc_html__('Enroll Text Color', 'gsp-ui-kit'),
-                'type'      => Controls_Manager::COLOR,
-                'default'   => '#111',
-                'selectors' => [
-                    '{{WRAPPER}} .gsp-ui-kit-tutor-lms-enroll-text_c' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        // 🔹 Details Button Background Color
-        $instance->add_control(
-            'gsp_ui_kit_tutor_lms_courses_button_text_color',
-            [
-                'label'     => esc_html__('Detail Text Color', 'gsp-ui-kit'),
-                'type'      => Controls_Manager::COLOR,
-                'default'   => '#111',
-                'selectors' => [
-                    '{{WRAPPER}} .gsp-ui-kit-tutor-lms-button-text_c' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        // 🔹 Enroll Button Background Color
-        $instance->add_control(
-            'gsp_ui_kit_tutor_lms_courses_enroll_button_bg_color',
-            [
-                'label'     => esc_html__('Enroll Button Background Color', 'gsp-ui-kit'),
-                'type'      => Controls_Manager::COLOR,
-                'default'   => '#0073aa',
-                'selectors' => [
-                    '{{WRAPPER}} .gsp-ui-kit-tutor-lms-enroll-button-bg_c' => 'background-color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        // 🔹 Details Button Background Color
-        $instance->add_control(
-            'gsp_ui_kit_tutor_lms_courses_details_button_bg_color',
-            [
-                'label'     => esc_html__('Details Button Background Color', 'gsp-ui-kit'),
-                'type'      => Controls_Manager::COLOR,
-                'default'   => '#0073aa',
-                'selectors' => [
-                    '{{WRAPPER}} .gsp-ui-kit-tutor-lms-details-button-bg_c' => 'background-color: {{VALUE}};',
-                ],
-            ]
-        );
-
-
 
         $instance->end_controls_section(); // End Style Section
     }

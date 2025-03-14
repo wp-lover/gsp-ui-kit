@@ -30,10 +30,10 @@ class Youtube_Player {
                 <div class="click-blocker"></div>
             </div>
             <div class="custom-controls">
-                <button onclick="playPause()">⏯ Play/Pause</button>
-                <button onclick="seekBackward()">⏪ -10s</button>
-                <button onclick="seekForward()">⏩ +10s</button>
-                <button onclick="toggleFullScreen()">⛶ Fullscreen</button>
+                <span onclick="playPause()">⏯ Play/Pause</span>
+                <span onclick="seekBackward()">⏪ -10s</span>
+                <span onclick="seekForward()">⏩ +10s</span>
+                <span onclick="toggleFullScreen()">⛶ Fullscreen</span>
             </div>
         </div>
         <?php return ob_get_clean();

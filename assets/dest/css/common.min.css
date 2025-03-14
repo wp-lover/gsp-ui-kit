@@ -584,6 +584,12 @@
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
+  background-color: #0aacea;
+  color: #fff;
+}
+.-btn:hover{
+  background-color: #ffedf9;
+  color: #0aacea;
 }
 
 .-card {

@@ -15,11 +15,11 @@ if ($courses_query->have_posts()) :
         ?>
             <div class="-card-view-blog -bo-border gsp-ui-kit-tutor-lms-card-bg_c">
                 <?php the_post_thumbnail('medium', ['loading' => 'lazy', 'class' => '-thumbnail']); ?>
-                <h2 class="-blog-title">
+                <h2 class="-blog-title -mt-2">
                     <a href="<?php echo esc_url(get_the_permalink()); ?>" class="gsp-ui-kit-tutor-lms-title-text_c"><?php the_title(); ?></a>
                 </h2>
                 <hr />
-                <div class="-d-flex -flex-between -px-2 mt-2">
+                <div class="-d-flex -flex-between -px-2 -mt-2">
                     <p class="gsp-ui-course-price"><?php echo $price_html; ?></p>
                     <?php
                     // 🔹 Display Category Name & Permalink
@@ -34,22 +34,18 @@ if ($courses_query->have_posts()) :
 
                     ?>
                 </div>
-                <button class="gsp-ui-kit-tutor-lms-details-button-bg_c -m-2">
-                    <a href="<?php echo esc_url(get_the_permalink()); ?>" class="gsp-ui-kit-tutor-lms-button-text_c">
+                <a href="<?php echo esc_url(get_the_permalink()); ?>" style="<?php echo $price_type === 'paid' ? '' : 'margin-top:55px;'; ?>" class="-btn text-center -course-enroll-btn text-center -my-2 -mx-4">
                         <?php echo esc_html($settings['gsp_ui_kit_tutor_lms_courses_details_button_text'] ?? ''); ?>
                     </a>
-                </button>
                 <?php
-                if ($product) {
+                if ($price_type === 'paid') {
                     $checkout_url = wc_get_checkout_url();
                     $add_to_cart_url = esc_url(wc_get_cart_url() . "?add-to-cart=$product_id&redirect=true&product-id=$product_id");
                 
                 ?>
-                    <button class="gsp-ui-kit-tutor-lms-enroll-button-bg_c -m-2">
-                        <a href="<?php echo $add_to_cart_url; ?>" class="gsp-ui-kit-tutor-lms-enroll-text_c">
+                    <a href="<?php echo $add_to_cart_url; ?>" class="-btn text-center -course-enroll-btn text-center -my-2 -mx-4">
                             <?php echo esc_html($settings['gsp_ui_kit_tutor_lms_courses_enroll_button_text'] ?? ''); ?>
-                        </a>
-                    </button>
+                    </a>
                 <?php
                 }
                 ?>
