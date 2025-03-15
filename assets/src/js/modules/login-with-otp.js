@@ -226,15 +226,15 @@ export default class Login_With_OTP {
         // Handle the response
         if (data.success) {
           console.log(data.data);
-          this.login_btn.innerHTML = "Login";
-          this.login_message.innerHTML = "Login successfull!";
+          this.login_btn.innerHTML = "লগইন করুন";
+          this.login_message.innerHTML = "লগইন সফল হয়েছে!";
           this.login_message.style.color = "green";
           location.replace(this.redirect_after_login.value);
         } else {
-          this.login_message.innerHTML = "Log-In Faild!";
+          this.login_message.innerHTML = "লগইন সম্পূর্ন হয়নি!"; 
           this.login_message.style.color = "red";
         }
-        this.login_btn.innerHTML = "Login";
+        this.login_btn.innerHTML = "লগইন করুন";
         console.log(data);
       })
       .catch((error) => {
@@ -242,7 +242,7 @@ export default class Login_With_OTP {
         this.login_message.innerHTML =
           "Something went worng, please try again later.";
         this.login_message.style.color = "red";
-        this.login_btn.innerHTML = "Login";
+        this.login_btn.innerHTML = "লগইন করুন";
       });
   }
 
@@ -308,11 +308,11 @@ export default class Login_With_OTP {
 
         console.log( data );
 
-        this.signup_btn.innerHTML = "Create Account";
+        this.signup_btn.innerHTML = "একাউন্ট তৈরি করুন";
       })
       .catch((error) => {
         console.error( error);
-        this.signup_btn.innerHTML = "Create Account";
+        this.signup_btn.innerHTML = "একাউন্ট তৈরি করুন";
         this.signup_message.innerHTML =
           '"' +
           phone_number +
@@ -341,7 +341,7 @@ export default class Login_With_OTP {
        
 
         if (data.success) {
-          this.verify_otp_btn.innerHTML = "OTP Verify";
+          this.verify_otp_btn.innerHTML = "ওটিপি কোড ভেরিফাই করুন";
           this.signup_message.innerHTML = data.data.message ?? "";
           this.signup_message.style.color = "black";
           localStorage.setItem('gsp_otp_code' , this.signup_otp_code.value);

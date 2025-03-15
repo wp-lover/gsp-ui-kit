@@ -2,6 +2,18 @@
 
 $redirect_after_login = 'https://proximaedutech.com/free-courses/';
 $redirect_after_signup = 'http://localhost/writteninfo/';
+
+$hide_login = isset( $_GET['forget-password'] ) || isset( $_GET['create-account'] ) ? '-d-none' : '';
+$form_title = 'Welcome to login';
+
+if (isset( $_GET['forget-password'] )) {
+    $form_title = 'Do you want to recover your password?';
+}
+
+if (isset( $_GET['create-account'] )) {
+    $form_title = 'Welcome to create account';
+}
+
 ?>
 
 <?php        
@@ -11,23 +23,28 @@ $redirect_after_signup = 'http://localhost/writteninfo/';
 <div id="gsp-login-with-otp-section" class="-card">
     <div>
         <h2 class="form-title">
-            Welcome to login
+            <?php echo $form_title; ?>
         </h2>
     </div>
     <div class="login-signup-section">
         <div class="form-tab">
             <p class="login-form-tab -acitve-tab -mr-1">
-                Login your account
+                আপনার একাউন্ট লগইন করুন
             </p>
 
-            <p class="signup-form-tab">Create an account</p>
+            <p class="signup-form-tab">একাউন্ট তৈরি করতে ক্লিক/টাচ করুন </p>
         </div>
         <!-- login-form -->
-        <?php include_once __DIR__ . '/login-form.php'; ?>
+        <?php 
+        include_once __DIR__ . '/login-form.php';
+        ?>
         <!-- signup-form -->
         <?php include_once __DIR__ . '/signup-form.php'; ?>
     </div>
-    <?php include_once __DIR__ . '/password-forget-form.php'; ?>
+    <?php 
+        include_once __DIR__ . '/password-forget-form.php'; 
+     ?>
+    
 </div><!-- #gsp-login-section -->
 <?php  } ?>
 

@@ -11,6 +11,10 @@ class Plugin
     {
         $this->plugin_activation();
 
+        // Mix Hook Theme Design contain all basic theme & woocommerce custom requirement as client
+        
+        include_once GSP_UI_KIT_ROOT_PATH . '/inc/Helpers/Mix_Hook_Theme_Design.php';
+
         Core\Register_Scripts::get_instance();
 
         new \GSP_UI_Kit\WooCommerce\Replace_Frontend();

@@ -30,7 +30,7 @@ class Register_Scripts
     public function register_assets()
     {
 
-
+        $this->login_js();
 
         wp_enqueue_style(
             'gsp-ui-kit-style',
@@ -48,6 +48,20 @@ class Register_Scripts
         );
 
         $this->youtube_player_scripts();
+    }
+
+    private function login_js(){
+        
+        // 
+        if ( untrailingslashit( home_url( '/login' ) ) == untrailingslashit( get_permalink() ) ) {
+            wp_enqueue_script(
+                'gsp-ui-kit-login',
+                GSP_UI_KIT_ROOT_URL . 'assets/dest/js/login.js',
+                [],
+                '1.0.0',
+                true
+            );
+        }
     }
 
     private function youtube_player_scripts()

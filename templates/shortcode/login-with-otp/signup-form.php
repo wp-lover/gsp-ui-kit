@@ -1,18 +1,23 @@
-<section class="signup-form -d-none">
+<?php
+
+$show_signup = isset( $_GET['create-account'] ) ? '' : '-d-none';
+
+?>
+<section class="signup-form <?php echo $show_signup; ?>">
     <div class="-from-input__name">
-        <label>Your name</label>
+        <label>আপনার নাম লিখুন</label>
         <input type="text"
             class="signup-name -input -w-100"
-            placeholder="Sakib Islam" />
+            placeholder="আপনার নাম" />
     </div>
     <div class="-from-input__phone">
-        <label>Phone Number</label>
+        <label>আপনার মোবাইল নাম্বার লিখুন</label>
         <input type="text"
             class="signup-phone-number -input -w-100 -phone-number"
-            placeholder="01712345678" />
+            placeholder="মোবাইল নাম্বার" /> 
     </div>
     <div class="-form-input__otp -d-none">
-        <label>OTP Code</label>
+        <label>ওটিপি কোড দিন</label>
         <input
             type="number"
             class="signup-otp-code -input -w-100"
@@ -22,10 +27,10 @@
     <p class="signup-message"></p>
     <div class="-from-input -mt-3">
         <button class="-signup-btn -btn -w-100">
-            Create Account
+            একাউন্ট তৈরি করুন
         </button>
         <button class="-verify-otp-btn -btn -w-100 -d-none">
-            Verify OTP
+            ওটিপি কোড ভেরিফাই করুন
         </button>
     </div>
 </section>
