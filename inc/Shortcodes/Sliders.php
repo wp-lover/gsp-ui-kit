@@ -12,7 +12,7 @@ class Sliders {
 
     public function teacher_testimonial () {
         ob_start();
-       include_once GSP_UI_KIT_ROOT_PATH . './templates/shortcode/sliders/students-testimonial.php';
+       include_once GSP_UI_KIT_ROOT_PATH . './templates/shortcode/sliders/teacher-testimonial.php';
 
       return ob_get_clean();
     }
