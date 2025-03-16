@@ -13,7 +13,7 @@ if ($courses_query->have_posts()) :
             // 🔹 Get Course Categories
             $terms = get_the_terms($course_id, 'course-category');
         ?>
-            <div class="-card-view-blog -bo-border gsp-ui-kit-tutor-lms-card-bg_c">
+            <div class="-card-view-blog -bo-border gsp-ui-kit-tutor-lms-card-bg_c" style="background-color:#fff;">
                 <?php the_post_thumbnail('medium', ['loading' => 'lazy', 'class' => '-thumbnail']); ?>
                 <h2 class="-blog-title -mt-2">
                     <a href="<?php echo esc_url(get_the_permalink()); ?>" class="gsp-ui-kit-tutor-lms-title-text_c"><?php the_title(); ?></a>
@@ -43,7 +43,7 @@ if ($courses_query->have_posts()) :
                     $add_to_cart_url = esc_url(wc_get_cart_url() . "?add-to-cart=$product_id&redirect=true&product-id=$product_id");
                 
                 ?>
-                     <a href="<?php echo $add_to_cart_url; ?>" class="-btn text-center -course-enroll-btn text-center -my-2 -mx-4">
+                     <a href="<?php echo $add_to_cart_url; ?>" class="-btn -course-enroll-btn text-center -my-2 -mx-4">
                         ইনরোল করুন
                         </a>
                 <?php

@@ -1,0 +1,20 @@
+.gsp-ui-footer {
+    @apply bg-[#92003f] py-2;
+}
+
+.gsp-ui-footer .footer__content{
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ;
+}
+.gsp-ui-footer .section-title{
+    @apply text-yellow-200 text-[1.1em] font-bold my-1;
+}
+
+.gsp-footer-link-with-icon{
+    @apply flex my-2;
+}
+.gsp-footer-link-with-icon .icon {
+    @apply mr-2;
+}
+.gsp-footer-link-with-icon .text {
+    @apply text-white;
+}

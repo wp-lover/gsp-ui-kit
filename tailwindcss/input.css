@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+@import "./primay/space.css";
+
+@import "./modules/footer.css";

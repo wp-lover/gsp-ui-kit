@@ -26,6 +26,14 @@ class Tutor_LMS_All_Courses
         $courses_query = new \WP_Query($args);
 
         // Include the template using the constant
+        ob_start();
+        ?>
+        <div class="-container">
+        <?php
         include_once GSP_UI_KIT_ROOT_PATH . 'templates/tutor-lms-courses.php';
+        ?>
+        </div>
+        <?php
+        return ob_get_clean();
     }
 }

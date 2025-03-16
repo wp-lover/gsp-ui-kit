@@ -11,6 +11,7 @@ use GSP_UI_Kit\Shortcodes\Tutor_LMS_Free_Courses;
 use GSP_UI_Kit\Shortcodes\Tutor_LMS_Paid_Courses;
 use GSP_UI_Kit\Shortcodes\Tutor_LMS_All_Courses;
 use GSP_UI_Kit\Shortcodes\Login_With_OTP;
+use GSP_UI_Kit\Shortcodes\Sliders;
 
 
 class Init_Hook {
@@ -29,5 +30,7 @@ class Init_Hook {
         ( new Tutor_LMS_All_Courses() )->fire_on_init_hook();
 
         ( new Login_With_OTP() )->fire_on_init_hook();
+
+        ( new Sliders() )->fire_on_init_hook();
     }
 }
