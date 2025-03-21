@@ -1,4 +1,5 @@
-export default class Login_With_OTP {
+import Update_Profile_After_Signup_With_OTP from "./update-profile-after-signup-with-otp";
+class Login_With_OTP {
   constructor() {
     this.section = document.getElementById("gsp-login-with-otp-section");
 
@@ -37,8 +38,10 @@ export default class Login_With_OTP {
       this.forgotten_phone_number =
         document.querySelector(".-forgotten-number");
       this.forgotten_otp = document.querySelector(".-forgotten-otp");
-      this.password = document.querySelector('.-forgotten-password');
-      this.confirm_password = document.querySelector('.-forgotten-confirm-password');
+      this.password = document.querySelector(".-forgotten-password");
+      this.confirm_password = document.querySelector(
+        ".-forgotten-confirm-password"
+      );
       this.forgotten_message = document.querySelector(
         ".-forgotten-password-message"
       );
@@ -69,7 +72,9 @@ export default class Login_With_OTP {
       this.request_new_password_btn = document.querySelector(
         ".-request-new-password-btn"
       );
-      this.update_password_btn = document.querySelector(".-update-password-btn");
+      this.update_password_btn = document.querySelector(
+        ".-update-password-btn"
+      );
 
       this.back_to_login_btn = document.querySelector(".-back-to-login-btn");
 
@@ -134,9 +139,9 @@ export default class Login_With_OTP {
       this.send_password_update_request();
     });
 
-    this.forgotten_phone_number.addEventListener( 'keydown' , () => {
-      this.forgotten_message.innerHTML = '';
-    } );
+    this.forgotten_phone_number.addEventListener("keydown", () => {
+      this.forgotten_message.innerHTML = "";
+    });
   } // envents ending
 
   form_visiability(is_login_visiable) {
@@ -231,7 +236,7 @@ export default class Login_With_OTP {
           this.login_message.style.color = "green";
           location.replace(this.redirect_after_login.value);
         } else {
-          this.login_message.innerHTML = "লগইন সম্পূর্ন হয়নি!"; 
+          this.login_message.innerHTML = "লগইন সম্পূর্ন হয়নি!";
           this.login_message.style.color = "red";
         }
         this.login_btn.innerHTML = "লগইন করুন";
@@ -263,6 +268,7 @@ export default class Login_With_OTP {
     }
 
     this.signup_btn.innerHTML = '<div class="loading-spinner"></div>';
+    this.signup_btn.disabled = true;  // Disable the button
 
     fetch(gsp_ui_kit_common.ajax_url, {
       method: "POST",
@@ -277,8 +283,11 @@ export default class Login_With_OTP {
       }),
     })
       .then((response) => {
-        console.log(response);
-        return response.json();
+        const contentType = response.headers.get('content-type');
+
+        if (contentType && contentType.includes('application/json')) {
+          return response.json(); // Parse JSON
+        }
       })
       .then((data) => {
         if (data.success) {
@@ -306,23 +315,22 @@ export default class Login_With_OTP {
           this.signup_message.style.color = "red";
         }
 
-        console.log( data );
+        console.log(data);
 
         this.signup_btn.innerHTML = "একাউন্ট তৈরি করুন";
       })
       .catch((error) => {
-        console.error( error);
+        console.error(error);
         this.signup_btn.innerHTML = "একাউন্ট তৈরি করুন";
-        this.signup_message.innerHTML =
-          '"' +
-          phone_number +
-          '"' +
-          " This number might be already registed, Try with a new number,";
+        this.signup_message.innerHTML = 'Something went wrong! , Please contact with us.';
+        this.signup_btn.disabled = false;  // Disable the button
       });
   }
 
   send_signup_otp_verification_request() {
+
     this.verify_otp_btn.innerHTML = '<div class="loading-spinner"></div>';
+    this.verify_otp_btn.disabled = true;  // Disable the button
 
     fetch(gsp_ui_kit_common.ajax_url, {
       method: "POST",
@@ -333,29 +341,55 @@ export default class Login_With_OTP {
         action: "gsp_ui_kit_signup_otp_verification",
         otp_code: this.signup_otp_code.value,
         phone_number: this.signup_phone_number.value,
-        nonce: gsp_ui_kit_common.nonce,
+        security: gsp_ui_kit_common.nonce,
       }),
     })
-      .then((response) => response.json())
-      .then((data) => {
-       
+      .then((response) => {
+        const contentType = response.headers.get("content-type");
 
+        if (contentType && contentType.includes("application/json")) {
+          return response.json(); // Parse JSON
+        } else {
+          console.log(response.text());
+          return response.text(); // Parse Text
+        }
+      })
+      .then((data) => {
         if (data.success) {
-          this.verify_otp_btn.innerHTML = "ওটিপি কোড ভেরিফাই করুন";
           this.signup_message.innerHTML = data.data.message ?? "";
           this.signup_message.style.color = "black";
-          localStorage.setItem('gsp_otp_code' , this.signup_otp_code.value);
-          localStorage.setItem('gsp_phone_number' , this.signup_phone_number.value);
+          localStorage.setItem("gsp_otp_code", this.signup_otp_code.value);
+          localStorage.setItem(
+            "gsp_phone_number",
+            this.signup_phone_number.value
+          );
 
-          location.replace( window.location.href + "?phone-number=" + this.signup_phone_number.value + "&otp=" + this.signup_otp_code.value );
-        }else{
+          localStorage.setItem(
+            "gsp_ui_kit_password",
+            data.data.password ?? ""
+          );
+
+          location.replace(
+            gsp_ui_kit_common.site_url +
+              "/login?phone-number=" +
+              this.signup_phone_number.value +
+              "&otp=" +
+              this.signup_otp_code.value
+          );
+        } else {
           this.signup_message.innerHTML = data.data.error ?? "";
+          this.verify_otp_btn.disabled = false;  // Disable the button
         }
-        
+
+        console.log(data);
+
+        this.verify_otp_btn.innerHTML = "ওটিপি কোড ভেরিফাই করুন";
       })
       .catch((error) => {
         console.error("otp verification error" + error);
-        this.verify_otp_btn.innerHTML = "Thank you, your phone number successfully registerd";
+        this.verify_otp_btn.innerHTML =
+          data.data.error ?? "Something went wrong";
+          this.verify_otp_btn.disabled = false;  // Disable the button
       });
   }
 
@@ -393,11 +427,9 @@ export default class Login_With_OTP {
           // hide request new password button
           this.request_new_password_btn.classList.add("-d-none");
           // show update password button
-          this.update_password_btn.classList.remove('-d-none');
-
-
-        }else{
-          this.forgotten_message.innerHTML = data.data.error ?? '';
+          this.update_password_btn.classList.remove("-d-none");
+        } else {
+          this.forgotten_message.innerHTML = data.data.error ?? "";
         }
 
         console.log(data);
@@ -410,25 +442,24 @@ export default class Login_With_OTP {
   }
 
   send_password_update_request() {
-
-    if (this.forgotten_otp.value == '') {
-      this.forgotten_message.innerHTML = 'Please enter OTP code';
+    if (this.forgotten_otp.value == "") {
+      this.forgotten_message.innerHTML = "Please enter OTP code";
       return;
     }
 
-    if (this.password.value == '' ) {
-      this.forgotten_message.innerHTML = 'Please enter a new password';
+    if (this.password.value == "") {
+      this.forgotten_message.innerHTML = "Please enter a new password";
       return;
     }
 
-    if (this.password.value !== this.confirm_password.value ) {
-      this.forgotten_message.innerHTML = 'Password did not match';
+    if (this.password.value !== this.confirm_password.value) {
+      this.forgotten_message.innerHTML = "Password did not match";
       return;
     }
 
     this.update_password_btn.innerHTML = '<div class="loading-spinner"></div>';
 
-    fetch( gsp_ui_kit_common.ajax_url , {
+    fetch(gsp_ui_kit_common.ajax_url, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded", // Important for WordPress AJAX
@@ -437,22 +468,34 @@ export default class Login_With_OTP {
         action: "gsp_ui_kit_update_password_by_phone_otp",
         phone_number: this.forgotten_phone_number.value,
         otp_code: this.forgotten_otp.value,
-        password : this.password.value,
+        password: this.password.value,
         nonce: gsp_ui_kit_common.nonce,
       }),
-    } ).then( ( response ) => response.json() ).then( (data) => {
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          this.forgotten_message.innerHTML = data.data.message ?? "No response";
 
-      if (data.success) {
-        this.forgotten_message.innerHTML = data.data.message ?? 'No response';
-      }else{
-        this.forgotten_message.innerHTML = data.data.error ?? 'Something went wrong';
-      }
+          localStorage.getItem('gsp_ui_kit_password' , data.data.password );
 
-      console.log(data);
-      this.update_password_btn.innerHTML = 'Update Password';
-    }).catch( (error) => {
-      console.error(error);
-      this.update_password_btn.innerHTML = 'Update Password';
-    });
+        } else {
+          this.forgotten_message.innerHTML =
+            data.data.error ?? "Something went wrong";
+        }
+
+        console.log(data);
+        this.update_password_btn.innerHTML = "Update Password";
+      })
+      .catch((error) => {
+        console.error(error);
+        this.update_password_btn.innerHTML = "Update Password";
+      });
   }
 }
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  new Login_With_OTP();
+  new Update_Profile_After_Signup_With_OTP();
+});

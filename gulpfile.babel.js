@@ -29,6 +29,11 @@ const paths = {
         dest : './assets/dest/js'
       },
 
+      login_script : {
+        src : './assets/src/js/modules/login-with-otp.js' ,
+        dest : './assets/dest/js'
+      },
+
       admin_scripts : {
         src :  './assets/src/js/admin-bundle.js',
         dest : './dest/js'
@@ -80,6 +85,34 @@ export const scripts = () => {
     .pipe( gulp.dest( paths.scripts.dest ) );
 }
 
+
+export const login_script = () => {
+  return gulp.src(paths.login_script.src)
+  .pipe( webpack({
+      module : {
+          rules: [
+              {
+                test: /\.js$/, // or your specific file types
+                exclude: /node_modules/,
+                use: {
+                  loader: 'babel-loader',
+                  options: {
+                    presets: ['@babel/preset-env']
+                  }
+                }
+              },
+              // add other rules here as needed
+            ]
+      },
+      output : {
+          filename: 'login.js'
+      },
+      mode : 'development',
+      devtool : !PRODUCTION ? 'inline-source-map' : false
+  }) )
+  .pipe( gulp.dest( paths.login_script.dest ) );
+}
+
 export const admin_scripts = () => {
   return gulp.src(paths.admin_scripts.src)
   .pipe( webpack({
@@ -110,7 +143,11 @@ export const admin_scripts = () => {
  
 
 export const watch = () => {
-    return gulp.watch( 'assets/src/**/*.*' , gulp.parallel(style , scripts  ));
+    return gulp.watch( 'assets/src/**/*.*' , gulp.parallel(style , scripts , login_script  ));
+}
+
+export const login_build = () => {
+  return gulp.build( 'assets/src/**/*.*' , gulp.parallel(style , scripts , login_script  ));
 }
 
 

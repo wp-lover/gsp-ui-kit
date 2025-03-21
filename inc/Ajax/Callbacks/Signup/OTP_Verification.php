@@ -2,10 +2,14 @@
 
 namespace GSP_UI_Kit\Ajax\Callbacks\Signup;
 
+use \GSP_UI_Kit\Core\Send_SMS;
+
 if (!defined('ABSPATH')) exit;
 
 class OTP_Verification
 {
+
+    private static $prevent_duplication = false;
 
     public static function handle()
     {
@@ -20,8 +24,19 @@ class OTP_Verification
             wp_die();
         }
 
+
+        if (self::$prevent_duplication) {
+            return;
+        }
+
+        self::$prevent_duplication = true;
+
         $otpcode = sanitize_text_field($_POST['otp_code']);
         $phone_number = sanitize_text_field($_POST['phone_number']);
+
+        $password = self::generatePassword(8);
+        
+        $userName = self::generate_unique_username();
 
         if (is_numeric($otpcode) && is_numeric($phone_number)) {
 
@@ -31,20 +46,32 @@ class OTP_Verification
 
             $data = $wpdb->get_row("SELECT * FROM $table_name WHERE phone_number = '{$phone_number}' AND one_time_otp = '{$otpcode}'");
 
-
+            // verify the OTP code
             if ($data) {
 
-                $password = $otpcode;
-
                 $user_id = wp_insert_user([
-                    'user_login' => $phone_number,
-                    'user_pass'  => $password,
+                    'user_login' => $userName,
+                    'user_pass'  =>  $password,
+                    'display_name' => $data->full_name,
                     'role' => 'subscriber',
                 ] , false );
 
+                if ( is_wp_error( $user_id ) ) {
+                    return wp_send_json_error(['error' => 'Something went wrong , please try again or countact us ']);
+                }
+
                 if ($user_id) {
 
-                    return wp_send_json_success(['message' => 'Your login-passowrd: ' . $password ]);
+                    $wpdb->update( $table_name , [ 'user_name' => $userName ] , [ 'phone_number' => $phone_number , 'one_time_otp' => $otpcode ] , [ '%s'] , [ '%s', '%s'] );
+
+                    $welcome_message = "Thank you for registering with us.\nYour registration number is \n" . $userName . "\nYour password is \n" . $password;
+                    Send_SMS::send_sms($phone_number, $welcome_message);
+
+                    return wp_send_json_success([
+                        'message' => "Thank you for registering with us.\nYour registration number is " . $userName . ".\nAnd your password is " . $password,
+                        'password' => $password
+                 ]);
+                    
                 } else {
                     return wp_send_json_error(['error' => 'Unable to create account , please try again or contact us']);
                 }
@@ -52,10 +79,23 @@ class OTP_Verification
                 return wp_send_json_success(['message' => 'OTP has been verified.']);
             } else {
 
-                return wp_send_json_error(['message' => 'Invalid OTP, please try again with correct OTP number']);
+                return wp_send_json_error(['error' => 'Invalid OTP, please try again with correct OTP number']);
             }
         }
 
-        return wp_send_json_error(['message' => 'Invalid user input']);
+        return wp_send_json_error(['errors' => 'Invalid user input']);
+    }
+
+    static function generatePassword($length = 12) {
+        return substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, $length);
+    }
+
+
+    static function generate_unique_username() {
+        do {
+            $userName = str_pad(rand(0, 99999999), 8, '0', STR_PAD_LEFT);
+        } while (username_exists($userName));
+    
+        return $userName;
     }
 }

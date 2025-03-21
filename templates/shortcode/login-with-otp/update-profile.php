@@ -108,18 +108,6 @@
         <input type="date" id="profile-update__date-of-birth" class="-input">
     </div> <!-- box end -->
 
-    <div class="-form-input profile-update__password-box">
-        <div class="-form-input__class">
-            <label for="profile-update__password">Password</label><br/>
-            <span style="font-size:0.9em;">Password must be 6 character or greater then 6</span>
-            <input type="text" id="profile-update__password" class="-input">
-            
-        </div> <!-- box end -->
-        <div class="-form-input__class">
-            <label for="profile-update__confirm-password">Confirm Password</label>
-            <input type="text" id="profile-update__confirm-password" class="-input -w-100">
-        </div> <!-- box end -->
-    </div>
     <p id="update-profile-message"></p>
     <div class="mt-2">
         <button id="update-profile-btn" class="-btn -w-100">Update Profile</button>

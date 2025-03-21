@@ -7,8 +7,6 @@ export default class Update_Profile_After_Signup_With_OTP {
         this.religion = document.getElementById('profile-update__relegion');
         this.home_district = document.getElementById('profile-update__home-district');
         this.date_of_birth = document.getElementById('profile-update__date-of-birth');
-        this.password = document.getElementById('profile-update__password');
-        this.confirm_password = document.getElementById('profile-update__confirm-password');
 
         this.message = document.getElementById('update-profile-message');
         this.update_profile_btn = document.getElementById('update-profile-btn');
@@ -57,18 +55,6 @@ export default class Update_Profile_After_Signup_With_OTP {
             this.date_of_birth.style.border = '2px solid green';
         });
 
-        this.password.addEventListener('keydown' , () => {
-            if (this.password.value.length >= 6) {
-                this.password.style.border = '2px solid green';
-            }
-        });
-
-        this.confirm_password.addEventListener('keydown' , () => {
-
-            if ( this.confirm_password.value != '' &&  this.password.value == this.confirm_password.value ) {
-                this.confirm_password.style.border = '2px solid green';
-            }
-        });
     }
 
     check_inputs_has_data() {
@@ -100,21 +86,6 @@ export default class Update_Profile_After_Signup_With_OTP {
             is_valid = false;
         }
 
-        if (this.password.value.length <  5) {
-            this.password.style.border = '1px solid red';
-            is_valid = false;
-        }
-
-        if (this.confirm_password.value == '' ) {
-            this.confirm_password.style.border = '1px solid red';
-            is_valid = false;
-        }
-
-        if (this.password.value != this.confirm_password.value ) {
-            this.confirm_password.style.border = '1px solid red';
-            is_valid = false;
-        }
-
         if (is_valid) {
             this.send_update_profile_request();
         }
@@ -125,8 +96,8 @@ export default class Update_Profile_After_Signup_With_OTP {
         this.update_profile_btn.innerHTML = '<div class="loading-spinner"></div>';
         const otp = localStorage.getItem('gsp_otp_code');
         const phone_number = localStorage.getItem('gsp_phone_number');
+        const password = localStorage.getItem('gsp_ui_kit_password');
 
-        console.log(otp + ' ' + phone_number);
 
         fetch( gsp_ui_kit_common.ajax_url, {
             method: "POST",
@@ -142,7 +113,7 @@ export default class Update_Profile_After_Signup_With_OTP {
               religion: this.religion.value,
               home_district: this.home_district.value,
               date_of_birth: this.date_of_birth.value,
-              password: this.password.value,
+              password: password,
               nonce: gsp_ui_kit_common.nonce,
             }),
         } ).then ( (response) => {
@@ -155,6 +126,8 @@ export default class Update_Profile_After_Signup_With_OTP {
                 this.message.style.color = 'green';
                 location.replace(gsp_ui_kit_common.site_url);
                 this.update_profile_btn.classList.add('-d-none');
+
+                localStorage.setItem('gsp_ui_kit_password' , '');
 
                 return;
             }else{

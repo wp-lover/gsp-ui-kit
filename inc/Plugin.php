@@ -17,7 +17,9 @@ class Plugin
 
         Core\Register_Scripts::get_instance();
 
-        new \GSP_UI_Kit\WooCommerce\Replace_Frontend();
+        if (class_exists('WooCommerce')) {
+            new \GSP_UI_Kit\WooCommerce\Replace_Frontend();
+        }
 
         new \GSP_UI_Kit\Ajax\Request_Handler();
 

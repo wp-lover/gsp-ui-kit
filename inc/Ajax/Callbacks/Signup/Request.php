@@ -2,15 +2,21 @@
 
 namespace GSP_UI_Kit\Ajax\Callbacks\Signup;
 
+use GSP_UI_Kit\Core\Send_SMS; // Ensure this class exists and is correctly defined in the specified namespace
+
+
 if (!defined('ABSPATH')) exit;
 
 class Request
 {
+    private static $prevent_duplication = false;
 
     public static function handle()
     {
-        // Verify nonce (recommended)
-        // check_ajax_referer( 'gsp_ui_kit_nonce', 'nonce' );
+         // Verify nonce
+    if (isset($_POST['security']) && !wp_verify_nonce($_POST['security'], 'gsp_ui_kit_nonce')) {
+        wp_send_json_error(['error' => 'Nonce verification failed']);
+    }
 
         if (!isset($_POST['phone_number']) || empty($_POST['phone_number'])) {
             wp_send_json_error(['error' => 'phone number is required']);
@@ -25,6 +31,12 @@ class Request
         $phone_number = sanitize_text_field($_POST['phone_number']);
         $name = sanitize_text_field($_POST['name']);
 
+        if (self::$prevent_duplication) {
+            return;
+        }
+
+        self::$prevent_duplication = true;
+
         if ( is_numeric($phone_number) ) {
             global $wpdb;
             $table_name = $wpdb->prefix . \GSP_UI_Kit\Core\Table_Creation::get_instance()->get_table_name_signup_with_phone_otp();
@@ -37,36 +49,22 @@ class Request
                 'one_time_otp' => $code
             );
 
-            $is_number_exists = $wpdb->get_row( "SELECT * FROM $table_name WHERE phone_number = '{$phone_number}' " );
+            $is_number_exists = $wpdb->get_results( "SELECT * FROM $table_name WHERE phone_number = '{$phone_number}' " );
 
 
-
-            if ($is_number_exists) {
-                return wp_send_json_success([ 'message' => 'You already have an account for ' . $phone_number ]);
+            // prevent to send duplicatlve OTP
+            if (count( $is_number_exists ) > 4) {
+                return wp_send_json_error([ 'error' => 'You already have ' . count( $is_number_exists ) . ' accounts under ' . $phone_number . ' number. please contact with us.' ]);
                 wp_die();
             }
 
-            if ( username_exists( $phone_number ) ) {
-                return wp_send_json_error([ 'error' => 'You already have an account for ' . $phone_number ]);
-                wp_die();
-            }
-
+        
             try {
 
                 $otp_message = ' Proxima Edu Tech OTP is ' . $code;
 
                 // make API request for send SMS to user's phone number
-                $response = wp_remote_post('http://bulksmsbd.net/api/smsapi', [
-                    'body' => [
-                        'api_key' => 'gonNyAuvBUDQjX9c8dJN',
-                        'type'   => 'text',
-                        'number' => $phone_number,
-                        'senderid'   => '8809617624832',
-                        'message' => $otp_message
-                    ]
-                ]);
-
-
+                $response = Send_SMS::send_sms($phone_number, $otp_message);
 
                 if (is_wp_error($response)) {
 
@@ -77,13 +75,15 @@ class Request
                     $status_code = wp_remote_retrieve_response_code($response);
 
                     // Get response body
-                    $body = json_decode( wp_remote_retrieve_body($response) );
+                    $body = json_decode( wp_remote_retrieve_body( $response ) );
 
                     // if SMS submitted
                     if ($body->response_code == 202 || $body->response_code == 200) {
 
                        if ($wpdb->insert($table_name, $data)) {
-                       return wp_send_json_success(['message' => 'OTP has been sent to ' . $phone_number]);
+                       return wp_send_json_success([
+                        'message' => 'OTP has been sent to ' . $phone_number
+                    ]);
                        }else{
                         return wp_send_json_error(['error' => 'data not submitted , please try again']);
                        }
@@ -91,7 +91,7 @@ class Request
                     }
 
                     if ($status_code == 1001) {
-                       return wp_send_json_error(['message' => 'Invalid phone number']);
+                       return wp_send_json_error(['error' => 'Invalid phone number']);
                     }
 
                 }
@@ -108,4 +108,6 @@ class Request
 
         wp_die();
     }
+
+ 
 }

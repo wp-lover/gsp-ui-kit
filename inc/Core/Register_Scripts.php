@@ -113,7 +113,7 @@ class Register_Scripts
                 'gsp-ui-kit-login',
                 GSP_UI_KIT_ROOT_URL . 'assets/dest/js/login.js',
                 [],
-                '1.0.0',
+                filemtime( GSP_UI_KIT_ROOT_PATH . 'assets/dest/js/login.js' ),
                 true
             );
         }
@@ -136,7 +136,7 @@ class Register_Scripts
 
         wp_localize_script('gsp-ui-kit-common', 'gsp_ui_kit_common', [
             'ajax_url' => admin_url('admin-ajax.php'),
-            'site_url' => esc_url( get_bloginfo('url') ),
+            'site_url' => esc_url( untrailingslashit( get_bloginfo('url') ) ),
             'nonce' => wp_create_nonce('gsp_ui_kit_nonce'),
         ]);
     }

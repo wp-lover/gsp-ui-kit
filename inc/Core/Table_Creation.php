@@ -27,7 +27,8 @@ class Table_Creation
 
         $sql = "CREATE TABLE $table_name (
             id MEDIUMINT(9) NOT NULL AUTO_INCREMENT,
-            phone_number VARCHAR(25) NOT NULL UNIQUE,
+            phone_number VARCHAR(25) NOT NULL,
+            user_name VARCHAR(25) NULL,
             full_name VARCHAR(50) NOT NULL,
             class VARCHAR(50) NULL,
             gender VARCHAR(10) NULL,

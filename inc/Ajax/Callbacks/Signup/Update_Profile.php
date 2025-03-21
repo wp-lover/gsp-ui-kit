@@ -49,11 +49,10 @@ class Update_Profile
         $religion = sanitize_text_field($_POST['religion']);
         $home_district = sanitize_text_field($_POST['home_district']);
         $date_of_birth = sanitize_text_field($_POST['date_of_birth']);
-        $password = sanitize_text_field($_POST['password']);
+        
+        $password = $_POST['password'];
 
-        if (!username_exists($phone_number)) {
-            wp_send_json_error(['error' => 'Account not found for ' . $phone_number]);
-        }
+       
 
         global $wpdb;
         $table_name = $wpdb->prefix . \GSP_UI_Kit\Core\Table_Creation::get_instance()->get_table_name_signup_with_phone_otp();
@@ -71,22 +70,22 @@ class Update_Profile
         }
 
         // Get user
-        $user = get_user_by('login', $phone_number);
+        $user = get_user_by('login', $is_otp_matched->user_name);
         if (!$user) {
-            return wp_send_json_error(['error' => 'User not found']);
+            return wp_send_json_error(['error' => 'User not found for']);
         }
 
-        // Update password
-        wp_set_password($password, $user->ID);
+        $user_signon= null;
 
         // Authenticate user after password update
         $credentials = [
-            'user_login'    => $phone_number,
+            'user_login'    => $is_otp_matched->user_name,
             'user_password' => $password,
             'remember'      => true,  // Set to false if you don't want "Remember me" functionality
         ];
 
         $user_signon = wp_signon($credentials, false);
+        
 
         if (is_wp_error($user_signon)) {
             return wp_send_json_error(['error' => 'Login failed']);
@@ -109,12 +108,14 @@ class Update_Profile
                 'home_district' => $home_district,
                 'date_of_birth' => $date_of_birth
             ),
-            array('phone_number' => $phone_number)
+            array('phone_number' => $phone_number , 'one_time_otp' => $otp),
+            [ '%s', '%s', '%s', '%s', '%s', ],
+            [ '%s', '%s', ]
 
         );
 
         // Clear OTP
-        \GSP_UI_Kit\Core\Phone_OTP::clear_otp_on_db($phone_number);
+        \GSP_UI_Kit\Core\Phone_OTP::clear_otp_on_db($phone_number , $otp);
 
         // Success response
        // Return success response
