@@ -13,6 +13,66 @@ add_filter( 'gettext', function ( $translated_text, $text, $domain ) {
     return $translated_text;
 }, 20, 3 );
 
+// gsp_translate_my_account_text
+add_filter( 'gettext', function ( $translated_text, $text, $domain ) {
+    if ( $domain === 'woocommerce' ) {
+        switch ( $translated_text ) {
+            case 'Addresses':
+                $translated_text = __( 'এড্রেস', 'woocommerce' );
+                break;
+        }
+    }
+    return $translated_text;
+}, 20, 3 );
+
+// gsp_translate_my_account_text
+add_filter( 'gettext', function ( $translated_text, $text, $domain ) {
+    if ( $domain === 'woocommerce' ) {
+        switch ( $translated_text ) {
+            case 'Account details':
+                $translated_text = __( 'একাউন্ট ডিটেইলস', 'woocommerce' );
+                break;
+        }
+    }
+    return $translated_text;
+}, 20, 3 );
+
+// gsp_translate_my_account_text
+add_filter( 'gettext', function ( $translated_text, $text, $domain ) {
+    if ( $domain === 'woocommerce' ) {
+        switch ( $translated_text ) {
+            case 'Logout':
+                $translated_text = __( 'লগ-আউট', 'woocommerce' );
+                break;
+        }
+    }
+    return $translated_text;
+}, 20, 3 );
+
+// gsp_translate_my_account_text
+add_filter( 'gettext', function ( $translated_text, $text, $domain ) {
+    if ( $domain === 'woocommerce' ) {
+        switch ( $translated_text ) {
+            case 'Downloads':
+                $translated_text = __( 'ডাউনলোড', 'woocommerce' );
+                break;
+        }
+    }
+    return $translated_text;
+}, 20, 3 );
+
+// gsp_translate_my_account_text
+add_filter( 'gettext', function ( $translated_text, $text, $domain ) {
+    if ( $domain === 'woocommerce' ) {
+        switch ( $translated_text ) {
+            case 'Orders':
+                $translated_text = __( 'অর্ডারসমূহ', 'woocommerce' );
+                break;
+        }
+    }
+    return $translated_text;
+}, 20, 3 );
+
 
 // gsp_translate_login_text
 add_filter( 'gettext', function ( $translated_text, $text, $domain ) {
