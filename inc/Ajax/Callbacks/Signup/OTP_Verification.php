@@ -34,7 +34,7 @@ class OTP_Verification
         $otpcode = sanitize_text_field($_POST['otp_code']);
         $phone_number = sanitize_text_field($_POST['phone_number']);
 
-        $password = self::generatePassword(8);
+        $password = self::generatePassword(6);
         
         $userName = self::generate_unique_username();
 
@@ -86,14 +86,14 @@ class OTP_Verification
         return wp_send_json_error(['errors' => 'Invalid user input']);
     }
 
-    static function generatePassword($length = 12) {
+    static function generatePassword($length = 6 ) {
         return substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, $length);
     }
 
 
-    static function generate_unique_username() {
+    static function generate_unique_username( $length = 6 ) {
         do {
-            $userName = str_pad(rand(0, 99999999), 8, '0', STR_PAD_LEFT);
+            $userName = str_pad(rand(0, 99999999), $length, '0', STR_PAD_LEFT);
         } while (username_exists($userName));
     
         return $userName;
