@@ -1,4 +1,4 @@
-<div class="-container swiper gsp-ui-kit-slider mt-4">
+<div class="swiper gsp-ui-kit-slider mt-4">
     <div class="swiper-wrapper">
         <!-- slider 1 -->
         <div class="swiper-slide">

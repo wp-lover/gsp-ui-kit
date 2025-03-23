@@ -1,4 +1,4 @@
-<div class="-container swiper gsp-ui-kit-slider mt-4">
+<div class="swiper gsp-ui-kit-slider mt-4">
     <div class="swiper-wrapper">
         <!-- slider 1 -->
         <div class="swiper-slide" style="width: 350px; height: 300px;border-radius: 30px;border:1px solid #92003f;padding:0px;">
